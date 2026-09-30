@@ -13,7 +13,6 @@ public class Sabot implements Iterable<Carte> {
 	private int nbOperations = 0;
 
 	public Sabot(Carte[] cartes) {
-		super();
 		this.cartes = cartes;
 		this.nbCartes = cartes.length;
 	}
@@ -23,22 +22,21 @@ public class Sabot implements Iterable<Carte> {
 	}
 
 	public void ajouterCarte(Carte carte) {
-		if (nbCartes == 106)
+		if (nbCartes == cartes.length)
 			throw new IllegalArgumentException();
 		cartes[nbCartes] = carte;
 		nbOperations++;
 	}
 
 	public Carte piocher() {
-		Iterator<Carte>iter = iterator();
+		Iterator<Carte> iter = iterator();
 		if (iter.hasNext()) {
-			Carte c = iter.next();
+			Carte carte = iter.next();
 			iter.remove();
-			return c;
-		} 
+			return carte;
+		}
 		return null;
 	}
-	
 
 	@Override
 	public Iterator<Carte> iterator() {
@@ -54,6 +52,7 @@ public class Sabot implements Iterable<Carte> {
 			if (nbOperations != nbOperationsReference)
 				throw new ConcurrentModificationException();
 		}
+
 		public boolean hasNext() {
 			return indiceIterateur < nbCartes;
 		}
@@ -69,19 +68,21 @@ public class Sabot implements Iterable<Carte> {
 				throw new NoSuchElementException();
 			}
 		}
+
 		@Override
 		public void remove() {
 			verificationConcurrence();
 			if (nbCartes < 1 || !nextEffectue) {
 				throw new IllegalStateException();
 			}
-			for (int i =indiceIterateur-1; i < nbCartes-1; i++) {
-				cartes[i] = cartes[i+1];
+			for (int i = indiceIterateur - 1; i < nbCartes - 1; i++) {
+				cartes[i] = cartes[i + 1];
 			}
 			nextEffectue = false;
 			indiceIterateur--;
 			nbCartes--;
-			nbOperations++; nbOperationsReference++;
+			nbOperations++;
+			nbOperationsReference++;
 		}
 	}
 }
