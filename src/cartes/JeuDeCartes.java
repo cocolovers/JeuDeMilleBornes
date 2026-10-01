@@ -22,6 +22,7 @@ public class JeuDeCartes {
 		for (int i = 0; i < typesDeCartes.length; i++) {
 			for (int j = 0; j < typesDeCartes[i].nbExemplaires; j++) {
 				cartes[a + j] = typesDeCartes[i].carte;
+//				System.out.println(cartes[a+j].toString());
 			}
 			a += typesDeCartes[i].nbExemplaires;
 		}
@@ -36,9 +37,12 @@ public class JeuDeCartes {
 //		
 		for (int i = 0; i < typesDeCartes.length; i++) {
 			for (int j = 0; j < typesDeCartes[i].nbExemplaires; j++) {
-				Carte carte = cartes[i];
-				if (!carte.equals(typesDeCartes[i].getCarte()))
+				Carte carte = cartes[i+j];
+				if (!(carte.equals(typesDeCartes[i].getCarte()))) {
+					System.out.println(i+j);
+					System.out.println("carte no " + i + " " + j + " " + carte.toString()   + typesDeCartes[i].getCarte().toString());
 					return false;
+				}
 			}
 		}
 		return true;
